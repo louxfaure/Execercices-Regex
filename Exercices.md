@@ -380,8 +380,7 @@ La difficulté de cet exercice vient du fait que toutes les lignes ne contiennen
 <details>
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
-^(.*?)\((.*?)\)\. (.*?)[!\?\.] (.*?)[,\.] ?(.*?\.)?(.*?$)?
-#### Extraire les informations sur le fascicule
+  #### Extraire les informations sur le fascicule
 - Expression :
   - Rechercher : `^(.*?)\((.*?)\)\. (.*?)[!\?\.] (.*?)[,\.] ?(.*?\.)?`
   - Remplacer par : `"$1"\t$2\t"$3"\t"$4\t"$5"`
