@@ -15,11 +15,12 @@ Chat
 
 - Expression : `(danseurs|maison)`
 - Explication : 
-    - `\$` le dollars est un métacarctères pour les expressions régulière, il est donc nécessaire de *l'échapper* en utilisant la barre oblique inversée (`\`)
+    - `\$` Le dollar est un métacaractère pour les expressions régulière, il est donc nécessaire de *l'échapper* en utilisant la barre oblique inversée (`\`)
     - `[..]` représente une classe de caractère. Cela correspond à un caractère parmi ceux entre crochets.
 </details>
 
 ### Identifier les mots 'ami', 'amis' et 'amie'. Ignorer 'amitié'
+<details>
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
 #### Première solution
@@ -36,6 +37,7 @@ Chat
 
 ### Rechercher le mot chat
 On cherche le mot chat en excluant les mots pour lesquels chat n'est qu'une partie du mot (ex : chatouilles)
+<details>
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
 - Expression : `\b[Cc]hat\b`
@@ -62,7 +64,7 @@ On cherche le mot chat en excluant les mots pour lesquels chat n'est qu'une part
 <details>
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
-1. On recherche une chaîne qui commence par 9 suivie par 3 caractères :
+1. On recherche une chaîne qui commence par 9 suivie par 2 caractères :
     - Expression : `9..`
     - Explication : `.` désigne *n'importe quel caractère* sauf un retour à la ligne (`\b`)
     - Résultat : ❌ J'obtiens des correspondances sur des cotes qui commence par 9 et est suivie par des lettres ou des espaces  : *9ART*, *9 AV*
@@ -396,3 +398,7 @@ La difficulté de cet exercice vient du fait que toutes les lignes ne contiennen
     - `(.*?$)` On capture tous les carctères jusqu'à la fin de laligne rencontré . C'est le 6eme groupe capturé. On utilise $6 pour utiliser le texte capturé
     - `(.*?\.)?` Le point d'interrogation derrière le groupe permet d'indiquer que ce dernier est facultatif
 </details> 
+
+
+
+
