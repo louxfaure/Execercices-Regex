@@ -1,5 +1,65 @@
 # Expressions régulières : Exercices
-## Extraction de mots dan sun texte\b
+## Exercice 1 : Cotes
+Dans la liste de cotes fournies 01_corpus_auteur.txt, trouver toutes celles qui correspondent à un auteur dont le nom commence par L. 
+
+Les cotes d’œuvre suivent la forme **84.xxx suivis des trois premières lettres du nom de l’auteur**.
+### Chaîne à traiter
+```
+84.1 HUG
+84.27 ZOL
+84.302 CAM
+84.5 DUM
+84.78 GID
+84.9 L
+84.06 RIM
+84.203 VIG
+84.4 BEC
+84.317 REN
+84.81 DUA
+84.02 MAU
+84.903 COH
+84.3 BER
+84.79 ROU
+84.63 FLA
+84.11 GRA
+84.100 PER
+84.6 VAL
+84.005 QUE
+84.7 JON
+84.83 NOI
+84.321 LAC
+84.08 TRE
+84.602 ARD
+84.12 GON
+84.934 DEL
+84.42 LEM
+84.314 MON
+84.023 FAB
+84.53 LAU
+84.107 ROC
+84.015 NEY
+84.64 BAR
+84.91 MIC
+84.71 BOI
+84.007 GUI
+84.808 LED
+84.39 HOU
+84.304 GAR
+846.52 LUC
+```
+### Correction
+<details>
+  <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
+
+- Expression : `^84\.\d{3} [lL]`
+- Explication :
+  - `^84` : la ligne doit commencer par la chaîne 84. `^` désigne le début de la ligne
+  - `^84\.` : la chaîne '84' doit être suivie par un point. Le point est un métacaractère en regex. Il est donc nécessaire de "l'échapper" avec une barre oblique inversée (`\`). Par exemple, l'expression `84.` retrouve '84.' et '846'.
+  - `^84\.\d{3}` : le point doit être suivi par 3 chiffres. `\d`.
+  - `^84\.\d{3} [Ll]` : les 3 chiffres sont ensuite suivis par un espace (` `. On aurait aussi pu utiliser `\s`) puis par la lettre l minuscule ou majuscule `[lL]`
+</details>
+
+## Exercice 2 : Extraction de mots dans un texte\b
 ### Chaîne à traiter
 ```
 Le chat est un animal de compagnie très populaire. Les gens adorent les chats pour leur indépendance et leur affection. Saviez-vous que les chatouilles peuvent rendre un chat très joueur ? Hier, j'ai vu un chat sauter par la chatière pour entrer dans la maison.
@@ -28,6 +88,11 @@ Chat
 - Explication : retourne "ami " "amie " "amis "
     - `.?` Indique que "ami' peut être suivi par n'importe quel caractère présent 0 ou 1 fois
     - ` ` On rajoute un espace pour être sûr de ne pas capturé "amit"
+</details>
+
+<details>
+
+<summary>Solution plus complexe </summary>
 
 #### Meilleure solution
 - Expression : `ami.?(?= )`
@@ -46,7 +111,7 @@ On cherche le mot chat en excluant les mots pour lesquels chat n'est qu'une part
 
 </details>
 
-## Les cotes : Identifier les exemplaires classés dans la section  qui traitent d'histoire et géographie
+## Exercice 3 : Cotes Dewey - Identifier les exemplaires classés dans la section  qui traite d'histoire et géographie
 ### Cas simples 
 #### Chaînes à tester
 ```
@@ -82,7 +147,7 @@ On cherche le mot chat en excluant les mots pour lesquels chat n'est qu'une part
      - `^9[0-9]{2}`  --> Utilise une classe de caractères
 </details>
 
-### Cas plus complexes des cotes magasins sont présentes dans léchantillon 
+### Cas plus complexes : des cotes magasins sont présentes dans léchantillon 
 #### Chaînes à tester
 ```
 022 ALE
@@ -114,7 +179,7 @@ Dans nos cotes libre accès, l'indice Dewey est toujours composé de 3 chiffres 
     - Explication : `[..]` représente une classe de caractère. Cela correspond à un caractère parmi ceux entre crochets.
 </details>
 
-### Cas plus complexes : certainrs cotes libres accès sont préfixées par des letres 
+### Cas plus complexes : certaines cotes libres accès sont préfixées par des lettres 
 #### Chaînes à tester
 ```
 022 ALE
@@ -148,7 +213,7 @@ Ma chaîne peux ou ne pas commencer par une ou plusieurs lettre suivi par un 9 l
 </details>
 
 
-## Sélectionner des ppn valides
+## Exercice 4 : Sélectionner des ppn valides
 Un PPN, contient 9 caractère 8 chiffres suivis par une clef qui peut un chiffre ou un x minuscule ou majuscule. Il peut être préfixé 
 #### Chaînes à tester
 ```
@@ -194,6 +259,70 @@ ELC931030488922
     - Résultat : ✔
 
 </details>
+
+## Exercice 5 : Valider une liste d'adresse emails
+Une adresse mail valide est constituée de la manière suivante "login@nomdedomaine.extension". 
+### Chaînes à traiter
+```
+mairieaullene@wanadoo.fr
+mairieazilone@orange.fr
+mairieazzana@orange.fr
+mairiebalogna@orange.fr
+mairiedebastelica@wanadoo.fr
+mairiebastelicaccia@wanadoo.fr
+mairiebelvederecampomoro@wanadoo.fr
+mairiebilia@wanadoo.fr
+bocognanomairie@orange.fr
+mairiedecalcatoggio@wanadoo.fr
+mairiecampowanadoofr
+mairiecannelle@orange.fr
+contactmairiecarbini@orange.fr
+mairiedecarbuccia@orange.fr
+cardotorgia@orange.fr
+mairie@cargese.corsica
+communedecargiaca@orange.fr
+casaglione@orange.fr
+contact@mairiecasalabriva.com
+mairiecauro@wanadoo.fr
+mairieciamannacce@wanadoo.fr
+mairiedecoggia@orange.fr
+mairiecognocoli@wanadoo.fr
+mairieconca@wanadoofr
+mairiecorrano@wanadoo.fr
+mairiecotichiavari@orange.fr
+@cozzano.corsica
+mairiecristinacce@orange.fr
+communecuttoli@wanadoo.fr
+mairieeccicasuarella@wanadoo.fr
+mairieevisa@orange.fr
+accueil@mairiedefigari.corsica
+communedefoce@orange.fr
+communedeforciolo@orange.fr
+mairiedefozzano@orange.fr
+mairiedefrasseto@wanadoo.fr
+mairiegiuncheto@orange.fr
+mairiegranace@orange.fr
+mairiegrossa@orange.fr
+mairievillage@mairiegpp.corsica
+communedeguagno@orange.fr
+communedeguarguale@hotmail.fr
+mairieguiteralesbains@orange.fr
+mairielecci@wanadoo.fr
+communedeletia@wanadoo.fr
+mairie@levie.fr
+mairielopigna@orange.fr
+communeloretoditallano@orange.fr
+mairiemarignana@orange.fr
+mairiemela@wanadoo.fr
+```
+### Correction
+<details>
+  <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
+
+- Correction : `^\w+@\w+\.\w+$`
+
+<details>
+
 
 ## Travail sur la langue du document zone 101
 #### Chaînes à tester
