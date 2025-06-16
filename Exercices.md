@@ -51,12 +51,12 @@ Les cotes d’œuvre suivent la forme **84.xxx suivis des trois premières lettr
 <details>
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
-- Expression : `^84\.\d{3} [lL]`
+- Expression : `^84\.\d\d\d L`
 - Explication :
   - `^84` : la ligne doit commencer par la chaîne 84. `^` désigne le début de la ligne
   - `^84\.` : la chaîne '84' doit être suivie par un point. Le point est un métacaractère en regex. Il est donc nécessaire de "l'échapper" avec une barre oblique inversée (`\`). Par exemple, l'expression `84.` retrouve '84.' et '846'.
-  - `^84\.\d{3}` : le point doit être suivi par 3 chiffres. `\d`.
-  - `^84\.\d{3} [Ll]` : les 3 chiffres sont ensuite suivis par un espace (` `. On aurait aussi pu utiliser `\s`) puis par la lettre l minuscule ou majuscule `[lL]`
+  - `^84\.\d\d\d` : le point doit être suivi par 3 chiffres. `\d`.
+  - `^84\.\d\d\d L` : les 3 chiffres sont ensuite suivis par un espace (` `. On aurait aussi pu utiliser `\s`) puis par la lettre L majuscule `L`
 </details>
 
 ## Exercice 2 : Extraction de mots dans un texte\b
@@ -320,11 +320,72 @@ mairiemela@wanadoo.fr
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
 - Correction : `^\w+@\w+\.\w+$`
+- Explication : 
+  - `^\w+@` Cherche depuis le début de la ligne (`^`), une chaîne de un ou plusieurs (`+`) carcatères alphabétique (`@`) jusqu' à l'arobase
+  - `^\w+@\w+\.` l'arobase est suivie par une ou plusieurs lettres (`\w+`) jusqu'un point (`\.`)
+  - `^\w+@\w+\.\w+$` le point est suivi par une ou plusieurs lettres (`\w+`) jusqu'à la fin de la ligne (`$`)
 
+</details>
+
+## Exercice 06 : Nettoyage de chaînes de caractères
+Supprimer tous les préfixes « monsieur » / « madame » en début de ligne.
+### Chaînes à traiter
+```
+Mr  Carlo SCHMID, Vice-Président du Bundestag, professeur de Sciences politiques de l'Université de Francfort
+Mr LUO-DAGANG, Professeur de littérature française à l'Université de Pékin.
+Mr Mario Vargas Llosa, écrivain.
+Mr Christopher HILL, Professeur d'histoire moderne à Balliol College, Oxford
+Monsieur Paul LECLERC, Président et directeur de la Public Library (New-York).
+Mme Sandra di MAJO, Professeur à l'école Normale de Pise
+Mme Rita SÜSSMUTH, Présidente du Bundestag
+Mr Imre Kertész, écrivain, prix Nobel de littérature 2002
+Mr William GOLDING, Homme de lettres britannique
+Mr Randolph QUIRK, Professeur de langue et littérature anglaises à l'Université de Londres
+Mr Umberto Eco, Professeur à l'Université de Bologne
+Mr Candido Mendes, écrivain
+Mr John Montague, poète.
+Mr Elmar MITTLER, Directeur de la bibliothèque universitaire de Göttingen; Président de la Ligue des bibliothèques européennes de recherche (LIBER)
+Mme Margaret Atwood, écrivain
+Mr Peter Brook, metteur en scène
+Mr Robert Wilson - metteur en scène et artiste visuel
+Mr Siegfried LIENHARD, Professeur à l'Université de Stockholm
+Mr Árpád GÖNCZ, Président de la République de Hongrie
+Madame Margit FRENK, Professeur émérite de l'Université autonome de Mexico
+Mr Gerardo MAROTTA, Président de L'istituto italiano per gli Studi Filosofici (Italie).
+Mr Derek LAW, Directeur du domaine de l'informatique stratégique de la bibliothèque de l'Université de Strathclyde ; membre fondateur de l'Association européenne des bibliothèques médicales
+Mr Giorgio Strehler, Homme de théâtre italien
+Mr Mario SOARES, Président de la République du Portugal, conjoint de Madame Maria Barroso.
+Mr Abbas Kiarostami, cinéaste
+Mr Ravan MAC DAVID, Professeur de linguistique à l'Université de Chicago
+Mr Seamus HEANEY, Poète irlandais, Prix Nobel de Littérature 1995, conjoint de Madame Marie Devlin
+Mr Francesco GABRIELI, Professeur à l'Université de Rome (Institut d'Etudes Islamiques)
+Mr David DAICHES, Professeur à l'Université de Sussex,
+Mr Luigi de NARDIS, Professeur de l'Université de La Sapienza de Rome
+Mr Bertil MALMBERG, Professeur de linguistique à l'Université de Lund, membre de l'Académie des Sciences Humaines de Suède.
+Mr Istvàn SÖTER, Directeur de l'Institut d'Études Littéraires de l'Académie des Sciences de Hongrie.
+Mr Tullio de Mauro, linguiste, ancien ministre
+Mr Dario Fo, homme de théâtre, prix Nobel de littérature 1997
+Mme Michelle Bachelet,  ancienne présidente du Chili, Secrétaire générale adjointe de "ONU - Femmes"
+Mr Wim WENDERS, Réalisateur cinématographique et critique
+Mr René RICHTERICH, Professeur à l'Université de Lausanne
+Mr Bela KOPECZI, Secrétaire général de l'Académie des Sciences de Hongrie, directeur des Études françaises à l'Université de Budapest.
+Mr Jorge Amado, Homme de lettres brésilien
+```
+### Correction :
 <details>
+  <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
+
+- Expression : 
+  - Rechercher : `^\w+`
+  - Remplacer par : ``
+- Explication : 
+    - `^\w+\b` Capture le premier mot de la ligne
+      - `^` Début de la ligne
+      - `\w+` Sèrie de une plusieurs lettre. S'arrête au premier espace recncontré 
+</details>
 
 
-## Travail sur la langue du document zone 101
+## Exercice 7 : Travail sur la langue du document zone 101
 #### Chaînes à tester
 ```
 =101  0\$afre$2639-2
@@ -367,7 +428,81 @@ Rechercher une chaîne qui commence par $a qui n'est pas suivie par la chaîne f
 - Explication : `(?!fre)` C'est une assertion négative (negative lookahead). Elle signifie que la chaîne fre ne doit pas suivre immédiatement la chaîne correspondante jusqu'à ce point.
 </details>
 
-## Extraire et formater les dates de la zone 100
+## Exercice 8 : Extraire des données de localisations
+
+Ces localisations contiennent de nombreuses informations dont nous voudrions extraire une liste de numéro de niveau et d’aile (nord ou sud)
+
+### Chaînes à traiter
+```
+Niveau 2 - Aménagement du territoire, urbanisme, jardins - Salle Nord  (Mur G)
+Niveau 2 - Géographie - Salle Nord  (Rayons 31-32)
+Niveau 2 - Géographie pays - Salle Nord  (Rayons 33-34)
+Niveau 2 - Géographie thématiques - Salle Nord (Mur G)
+Niveau 2 - Grec moderne - Salle Sud (Rayon 5)
+Niveau 2 - Histoire ancienne - Salle Sud (Rayons 11-15)
+Niveau 2 - Histoire et géographie manuels - Salle Sud (Mur D)
+Niveau 2 - Histoire généralités - Salle Sud (Mur D)
+Niveau 2 - Revues histoire - Salle Nord
+Niveau 2 - Revues langues anciennes - Salle Sud (Rayon 1)
+Niveau 2 - Revues religions - Salle Sud (Rayon 6)
+Niveau 2 - Sources historiques et religieuses - Salle Sud (Murs B et C)
+Niveau 4 -  700  Histoire de l'art - Salle Nord (Rayons 26-27)
+Niveau 4 -  730 Art Sculpture/Arts plastiques - Salle Nord (Mur F)
+Niveau 4 -  740 Art Dessin/Design/Arts décoratifs - Salle Nord (Mur G)
+Niveau 4 -  760 Arts graphiques/Gravure - Salle Nord (Mur G)
+Niveau 4  - Théâtre, danse - Salle Sud (Rayons 15-16)
+Niveau 4 - 709.04 - 709.05 Art contemporain - Salle Nord (Rayons 31-34)
+Niveau 4 - 709.2-.9 Art par pays - Salle Nord (Rayons 34-35)
+Niveau 4 - 720 Architecture - Salle Nord (Rayons 35-36)
+Niveau 4 - 750 Peinture - Salle Nord (Mur G)
+Niveau 4 - Cinéma - Salle Sud (Rayons 17-19)Niveau 4 - DVD documentaires CADIST - Salle Sud (espace central)
+Niveau 4 - DVD fictions - Salle Sud (espace central)
+Niveau 4 - DVD fictions Amérique latine et Afrique lusophone - Salle Sud (espace central)
+Niveau 4 - Gestion des organisations - Salle Sud (Mur B)
+Niveau 4 - Musique - Salle Sud (Rayons 12-14)
+Niveau 4 - Philosophie (autre) - Salle Nord (Mur E)
+Niveau 4 - Philosophie (généralités) - Salle Nord (Rayons 20-21)
+Niveau 4 - Sciences de l'éducation - Salle Sud (Murs A et B)
+Niveau 4 - Sciences de l'information - Salle Sud (Rayons 3-6)
+Niveau 4 - Vie de l'étudiant, concours - Salle Sud (Rayons 1-2)
+Niveau 6 - Bandes dessinées Bacs - Salle Nord (Espace BD bacs)
+Niveau 6 - Français langue étrangère - Salle Sud (Rayons 22-23)
+Niveau 6 - Illustrés jeunesse - Salle Nord (Espace BD)
+Niveau 6 - Langue allemande - Salle Sud (Rayons 24-27)
+Niveau 6 - Langue anglaise - Salle Sud (Rayons 24-27)
+Niveau 6 - Langue arabe et autres langues orientales - Salle Sud (Rayons 24-27)
+Niveau 6 - Langue espagnole - Salle Sud (Rayons 24-27)
+Niveau 6 - Langue française - Salle Sud (Rayons 19-21)
+Niveau 6 - Langue portugaise - Salle Sud (Rayons 24-27)
+Niveau 6 - Littérature française - Salle Sud (Rayons 2-16)
+Niveau 6 - Littérature francophone - Salle Sud (Murs A-C)
+Niveau 6 - Littérature générale et comparée - Salle Nord (Rayons 52-57)
+Niveau 6 - Littérature italienne et roumaine - Salle Nord (Rayons 69-70)
+Niveau 6 - Littérature slave - Salle Nord (Rayons 74-75)
+Niveau 6 - Littérature suédoise - Salle Nord (Rayon 68)
+Niveau 6 - Méthodes de langues - Salle Sud (espace central)
+Niveau 6 - Revues Amérique latine - Salle Nord (Rayon 51)
+Niveau 6 - Revues Anglais - Salle Nord (Rayon 51)
+Niveau 6 - Revues Espagnol et Portugais - Salle Nord (Rayon 51)
+Niveau 6 - Revues langues slaves - Salle Nord (Rayon 51)
+Niveau 6 - Revues linguistique française et romane - Salle Sud (Rayon 17)
+Niveau 6 - Revues littérature générale - Salle Nord (Rayon 50-51)
+Niveau 6 - Revues Moyen-Age - Salle Sud (Mur D)
+```
+<details>
+  <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
+
+- Correction : 
+  - Rechercher : `(Niveau \d+).*(Salle \w+).*`
+  - Remplacer par : `\$1\t$2`
+- Explication :
+  - `(Niveau \d+)`On capture `()` le mot niveau et le ou les chiffres qui suivent. Comme il s'agit du premier élément capturé on l'appelle avec `$1` dans la fonction remplacer
+  - `.*` On consomme tous les cacractères qui suivent
+  - `(Salle \w+)` Jusqu'au mot Salle que l'on capture avec le mot suivant ` \w+`. On utilise `$2` pour appeler la chaîne capturée
+  -  `.*` On consomme tous les cacractères qui suivent
+</details>
+
+## Exercice 9 : Extraire et formater les dates de la zone 100
 Nous voudrions extraire : 
  - la date 1 pour les monographies (100 pos.8 = d,e,f,g,h,i,j,k)
  - la date 1 suivie par un - pour les périodiques en cours (100 pos.8 = a)
@@ -409,7 +544,7 @@ Nous voudrions extraire :
 <details>
   <summary>🕵️‍♀️Avez-vous bien cherché avant de consulter la solution ?</summary>
 
-#### Extraire la date 1 pour les monographies (100 pos.8 = d,e,f,g,h,i,j,k)
+#### 9.1 Extraire la date 1 pour les monographies (100 pos.8 = d,e,f,g,h,i,j,k)
 - Expression :
     - Rechercher : `^.*?\$a.{8}[d-k](.{4}).*`
     - Remplacer par : `$1`
@@ -420,25 +555,25 @@ Nous voudrions extraire :
     - `(.{4})` On capture ensuite gra^ceau x parenthèses les caractères qui suivent. Comme il s'agit du premier groupe capturé. J'utilise ensuite le `$1` pour faire rféférence à ce groupe
     - `.*` Je consomme ensuite le reste de ma ligne. C'est essentiel pour pouvoir écraser cette partie de la chaîne de caractère lors de l'opération de remplacement.
 
-#### Extraire la date 1 et ajouter un - pour les périodiques en cours (100 pos.8 = a)
+#### 9.2 Extraire la date 1 et ajouter un - pour les périodiques en cours (100 pos.8 = a)
 - Expression :
     - Rechercher : `^.*?\$a.{8}a(.{4}).*`
     - Remplacer par : `$1 - `
 
-#### Extraire la date 1 et ajouter un ? pour les péridiques dont la situation est inconnue (100 pos.8 = c)
+#### 9.3 Extraire la date 1 et ajouter un ? pour les péridiques dont la situation est inconnue (100 pos.8 = c)
 - Expression :
     - Rechercher : `^.*?\$c.{8}a(.{4}).*`
     - Remplacer par : `$1 - ?`
 
 
-#### Extraire la date 1 et la date 2. Les séparer par un - pour les ressources continue morte (100 pos.8 = b)
+#### 9.4 Extraire la date 1 et la date 2. Les séparer par un - pour les ressources continue morte (100 pos.8 = b)
 - Expression :
     - Rechercher : `^.*?\$b.{8}b(.{4})(.{4}).*`
     - Remplacer par : `$1 - $2`
 
 </details>
 
-## Formater des champs textuels pour les exploiter dans un tableur
+## Formater des champs de citations pour les exploiter dans un tableur
 Voici une liste de document extraite d'une bibliographie formaté selon le style de citation (APA)7eme edition. Nous aimerions exploier ces données dans un tableur contenant :
   - Les auteurs de l'ouvrage ou de l'article
   - La date de publication
