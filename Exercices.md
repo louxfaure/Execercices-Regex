@@ -546,10 +546,10 @@ Nous voudrions extraire :
 
 #### 9.1 Extraire la date 1 pour les monographies (100 pos.8 = d,e,f,g,h,i,j,k)
 - Expression :
-    - Rechercher : `^.*?\$a.{8}[d-k](.{4}).*`
+    - Rechercher : `^.*\$a.{8}[d-k](.{4}).*`
     - Remplacer par : `$1`
 - Explication : 
-    - `^.*?\$a` La chaîne de données codées commence à partir du $a. On part du début de la ligne (`^`) et on sélectionne n'importe quel caractère (`.`) présent 0 ou plusieurs fois (`*`). On arrète ce motif jusqu'à la premire occurence (`?`) du $a (\\$a). Le $ est échappé
+    - `^.*\$a` La chaîne de données codées commence à partir du $a. On part du début de la ligne (`^`) et on sélectionne n'importe quel caractère (`.`) présent 0 ou plusieurs fois (`*`). On arrète ce motif jusqu'à la chaîne $a (`\$a`). Le $ est échappé (`\`)
     - `.{8}` On consomme ensuite les 8 caractères situés après le $a. `.` n'importe quel caractère, `{8}` répétés 8 fois.
     - `[d-k]` Le carcatère suivant doit une lettre comprise entre d et k
     - `(.{4})` On capture ensuite gra^ceau x parenthèses les caractères qui suivent. Comme il s'agit du premier groupe capturé. J'utilise ensuite le `$1` pour faire rféférence à ce groupe
@@ -557,18 +557,18 @@ Nous voudrions extraire :
 
 #### 9.2 Extraire la date 1 et ajouter un - pour les périodiques en cours (100 pos.8 = a)
 - Expression :
-    - Rechercher : `^.*?\$a.{8}a(.{4}).*`
+    - Rechercher : `^.*\$a.{8}a(.{4}).*`
     - Remplacer par : `$1 - `
 
 #### 9.3 Extraire la date 1 et ajouter un ? pour les péridiques dont la situation est inconnue (100 pos.8 = c)
 - Expression :
-    - Rechercher : `^.*?\$c.{8}a(.{4}).*`
+    - Rechercher : `^.*\$a.{8}a(.{4}).*`
     - Remplacer par : `$1 - ?`
 
 
 #### 9.4 Extraire la date 1 et la date 2. Les séparer par un - pour les ressources continue morte (100 pos.8 = b)
 - Expression :
-    - Rechercher : `^.*?\$b.{8}b(.{4})(.{4}).*`
+    - Rechercher : `^.*\$a.{8}b(.{4})(.{4}).*`
     - Remplacer par : `$1 - $2`
 
 </details>
@@ -661,6 +661,11 @@ La difficulté de cet exercice vient du fait que toutes les lignes ne contiennen
     - `(.*?$)` On capture tous les carctères jusqu'à la fin de laligne rencontré . C'est le 6eme groupe capturé. On utilise $6 pour utiliser le texte capturé
     - `(.*?\.)?` Le point d'interrogation derrière le groupe permet d'indiquer que ce dernier est facultatif
 </details> 
+
+## Exercices Bonus 
+- Extraire le DOI : [doi.txt](ExercicesBonus/doi.txt)
+- Renommage de fichiers : Extraire le nom de l'auteur de la liste de noms de fichier des thèses numérisées --> [theses_a_renommer.txt](ExercicesBonus/theses_a_renommer.txt)
+- Extraire les identifiants ORCID dans cet article scientifique --> [orcid.txt](ExercicesBonus/orcid.txt)
 
 
 
